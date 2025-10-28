@@ -52,9 +52,15 @@ export const FooterView = () => {
 };
 
 export const FormGroup = (title, name, placeholder, type, value) => {
-  const element = Div();
-  const label = Label(title, name);
-  const input = Input(name, placeholder, type, value);
+  const element = Div('mb-4');
+  const label = Label(title, name, 'block text-sm font-medium text-gray-700 mb-2');
+  const input = Input(
+    name,
+    placeholder,
+    type,
+    value,
+    'w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors'
+  );
   element.append(label, input);
   return element;
 };
