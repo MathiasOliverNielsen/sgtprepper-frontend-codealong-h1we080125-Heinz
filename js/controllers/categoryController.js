@@ -6,7 +6,7 @@ export const getCategoryList = async () => {
   const formattedCategories = data.map((item) => ({
     slug: item.slug,
     title: item.title,
-    url: `#/?category=${item.slug}`, // Fix: use hash routing with query parameter
+    url: `/index.htm?category=${item.slug}`,
   }));
 
   return formattedCategories;
