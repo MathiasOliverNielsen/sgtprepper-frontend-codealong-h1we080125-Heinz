@@ -1,6 +1,7 @@
 import { getProduct } from '../models/productModel.js';
 import { ProductDetailView } from '../views/organisms/productViews.js';
 import { Layout } from './layoutController.js';
+import { price2Dkk } from '../utils/index.js';
 
 export const ProductDetailPage = async () => {
   // Extract category and slug from URL hash
@@ -28,7 +29,7 @@ export const ProductDetailPage = async () => {
       ...product,
       stockText: product.stock ? 'På lager' : 'Forventes på lager indenfor få uger',
       stockClass: product.stock ? 'text-green-600' : 'text-red-600',
-      formattedPrice: `${product.price} kr.`,
+      formattedPrice: price2Dkk(product.price),
       categoryTitle: product.category?.title || '',
       brandTitle: product.brand?.title || '',
     };

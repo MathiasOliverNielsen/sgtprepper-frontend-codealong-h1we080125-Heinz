@@ -1,4 +1,5 @@
 import { Div, Fragment, Heading, Image, Paragraph, Link } from '../atoms/index.js';
+import { price2Dkk } from '../../utils/index.js';
 
 export const ProductListView = (products) => {
   const element = Fragment();
@@ -22,7 +23,7 @@ export const ProductListView = (products) => {
 
     const cost = Div('text-right');
     const priceElement = Div('text-xl font-bold text-gray-800');
-    priceElement.innerText = `${price} kr.`;
+    priceElement.innerText = price2Dkk(price);
 
     const stockElm = Paragraph(stockClass + ' text-sm font-medium');
     stockElm.innerText = stockText;
