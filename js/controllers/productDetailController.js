@@ -37,7 +37,7 @@ export const ProductDetailPage = async () => {
     const html = ProductDetailView(formattedProduct);
 
     // Return the layout with product details
-    return Layout(product.name, html);
+    return Layout(product.name, html, category);
   } catch (error) {
     console.error('Error fetching product:', error);
     return Layout('Fejl', 'Der opstod en fejl ved indlæsning af produktet');

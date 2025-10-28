@@ -14,16 +14,21 @@ export const HeaderView = () => {
   return element;
 };
 
-export const NavBarView = (arrNavItems) => {
+export const NavBarView = (arrNavItems, activeCategory = null) => {
   const element = document.createElement('nav');
   element.className = 'bg-sky-950';
   const ul = Ul('flex');
 
   arrNavItems.forEach((item) => {
-    const { url, title } = item; // Destructure assignment - udskiller egenskaber fra objekt
+    const { url, title, slug } = item; // Destructure assignment - udskiller egenskaber fra objekt
 
     const li = Li();
-    const item1 = Link(url, title, 'block p-4 text-white');
+
+    // Check if this is the active category
+    const isActive = activeCategory === slug;
+    const linkClass = isActive ? 'block p-4 text-white bg-sky-600 border-b-2 border-white font-semibold' : 'block p-4 text-white hover:bg-sky-800 transition-colors';
+
+    const item1 = Link(url, title, linkClass);
     li.append(item1);
     ul.append(li);
   });

@@ -21,6 +21,6 @@ export const ProductPage = async () => {
   const html = ProductListView(formattedProducts);
 
   // Samler og returnerer side layoutet
-  const layout = Layout('Produkter', html);
+  const layout = Layout('Produkter', html, category);
   return layout;
 };

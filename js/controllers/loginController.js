@@ -8,5 +8,4 @@ export const LoginPage = () => {
   const password = FormGroup('Adgangskode', 'password', 'Indtast dit adgangskode', 'password', '');
   form.append(username, password);
   return Layout('Login', form);
-  return Layout('Login', form);
 };
