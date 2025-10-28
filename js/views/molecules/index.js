@@ -1,4 +1,4 @@
-import { Heading, Label, Li, Link, Paragraph, Ul } from '../atoms/index.js';
+import { Heading, Label, Li, Link, Paragraph, Ul, Div, Input } from '../atoms/index.js'; // Add Div and Input
 
 export const HeaderView = () => {
   const element = document.createElement('header');
@@ -6,7 +6,9 @@ export const HeaderView = () => {
   const h1 = Heading('Sgt. Prepper');
   element.append(h1);
   const p = Paragraph();
-  const a = Link('/index.htm/login', 'Login');
+  const a = Link('#/login', 'Login'); // Use hash routing for SPA
+  // OR
+  // const a = Link('/login', 'Login'); // If you have proper backend routing
   p.append(a);
   element.append(p);
   return element;
@@ -46,8 +48,10 @@ export const FooterView = () => {
 
 export const FormGroup = (title, name, placeholder, type, value) => {
   const element = Div();
-  const label = Label();
-  const element = Div();
+  const label = Label(title, name);
+  const input = Input(name, placeholder, type, value);
+  element.append(label, input);
+  return element;
 };
 
 // export const FormGroup = {title, name, placeholder, value} => {

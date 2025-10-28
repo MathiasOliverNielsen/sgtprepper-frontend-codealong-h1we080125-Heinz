@@ -1,13 +1,13 @@
-import { getList } from "../models/categoryModel.js"
+import { getList } from '../models/categoryModel.js';
 
 export const getCategoryList = async () => {
-    const data = await getList()
+  const data = await getList();
 
-    const formattedCategories = data.map(item => ({
-        slug: item.slug,
-        title: item.title,
-        url: `/index.htm?category=${item.slug}`
-    }))
-    
-    return formattedCategories
-}
+  const formattedCategories = data.map((item) => ({
+    slug: item.slug,
+    title: item.title,
+    url: `#/?category=${item.slug}`, // Fix: use hash routing with query parameter
+  }));
+
+  return formattedCategories;
+};

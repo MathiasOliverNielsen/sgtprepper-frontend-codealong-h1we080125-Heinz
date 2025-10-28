@@ -59,25 +59,27 @@ export const Form = (method = 'GET') => {
 
 export const Label = (title, id, className = '') => {
   const element = document.createElement('label');
-  elelment.for = id;
+  element.htmlFor = id; // Fix: was 'elelment.for'
   element.innerText = title;
   element.className = className;
+  return element; // Add return statement
 };
 
-export const Input = (name, placeholder, type = 'text', value = '', classname) => {
+export const Input = (name, placeholder, type = 'text', value = '', className = '') => {
+  // Fix parameter name
   const element = document.createElement('input');
   element.type = type;
   element.name = name;
   element.placeholder = placeholder;
   element.value = value;
-  element.classname = classname;
+  element.className = className; // Fix: was 'classname'
   return element;
 };
 
 export const Button = (title, type = 'submit', className = '') => {
   const element = document.createElement('button');
   element.type = type;
-  element.textContent = textContent;
+  element.textContent = title; // Fix: was 'textContent'
   element.className = className;
   return element;
 };
