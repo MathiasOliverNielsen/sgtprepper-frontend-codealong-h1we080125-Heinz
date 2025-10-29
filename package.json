@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "dev": "http-server -p 3000 -c-1",
+    "start": "http-server -p 3000",
+    "build": "npx tailwindcss -i ./css/input.css -o ./css/styles.css --minify",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,7 +17,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/MathiasOliverNielsen/sgtprepper-frontend-codealong-h1we080125-Heinz/issues"
   },
