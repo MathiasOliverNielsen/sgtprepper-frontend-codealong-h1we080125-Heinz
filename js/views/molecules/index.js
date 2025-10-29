@@ -64,10 +64,3 @@ export const FormGroup = (title, name, placeholder, type, value) => {
   element.append(label, input);
   return element;
 };
-
-// export const FormGroup = {title, name, placeholder, value} => {
-// const element = Div()
-// const label = Label(title, name)
-// const Input(name, placeholder, type, value)
-// append
-// }

@@ -10,8 +10,9 @@ export const LoginView = () => {
   container.append(title);
 
   // Create form
-  const form = Form('POST');
+  const form = Form();
   form.className = 'space-y-4';
+  form.method = 'POST';
 
   // Add form fields
   const username = FormGroup('Brugernavn', 'username', 'Indtast brugernavn', 'text', '');
@@ -27,5 +28,7 @@ export const LoginView = () => {
   form.append(username, password, submitBtn);
   container.append(form);
 
+  // Return the form so the controller can add event listeners to it
+  container.form = form;
   return container;
 };

@@ -2,24 +2,38 @@ import { LoginView } from '../views/organisms/loginView.js';
 import { Layout } from './layoutController.js';
 
 export const LoginPage = () => {
-  const loginForm = LoginView();
+  const loginContainer = LoginView();
 
-  loginForm.addEventListener('submit', (e) => {
-    handleLogin(e);
-  });
+  // Get the form from the container and add event listener
+  const form = loginContainer.form;
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      handleLogin(e);
+    });
+  }
 
-  return Layout('', loginForm); // Empty title to avoid duplicate h1
+  return Layout('', loginContainer); // Empty title to avoid duplicate h1
 };
 
 export const handleLogin = async (e) => {
   e.preventDefault();
   const form = e.currentTarget;
 
-  const username = form.username.value.trim();
-  const password = form.password.value.trim();
+  // Use FormData to safely get form values
+  const formData = new FormData(form);
+  const username = formData.get('username')?.trim();
+  const password = formData.get('password')?.trim();
 
   if (username && password) {
-    const data = await AuthenticationModel(username, password);
-    console.log(data);
+    try {
+      // For now, just log the attempt since AuthenticationModel isn't implemented
+      console.log('Login attempt:', { username, password });
+      alert('Login functionality will be implemented later');
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Der opstod en fejl ved login');
+    }
+  } else {
+    alert('Indtast både brugernavn og adgangskode');
   }
 };
