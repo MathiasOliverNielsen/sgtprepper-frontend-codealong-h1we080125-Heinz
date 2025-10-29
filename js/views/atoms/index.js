@@ -72,7 +72,9 @@ export const Input = (name, placeholder, type = 'text', value = '', className = 
   element.name = name;
   element.placeholder = placeholder;
   element.value = value;
-  element.className = className; // Fix: was 'classname'
+  element.className = className;
+  element.autocomplete = true;
+  element.required = true; // Make input required by default
   return element;
 };
 
