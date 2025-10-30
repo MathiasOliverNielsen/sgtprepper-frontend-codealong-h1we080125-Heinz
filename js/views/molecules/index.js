@@ -2,15 +2,26 @@ import { Heading, Label, Li, Link, Paragraph, Ul, Div, Input } from '../atoms/in
 
 export const HeaderView = () => {
   const element = document.createElement('header');
-  element.className = 'bg-slate-700 p-4 text-white';
+  element.className = 'bg-slate-700 p-4 text-white flex justify-between items-center';
+
   const h1 = Heading('Sgt. Prepper');
-  element.append(h1);
-  const p = Paragraph();
-  const a = Link('#/login', 'Login'); // Use hash routing for SPA
-  // OR
-  // const a = Link('/login', 'Login'); // If you have proper backend routing
-  p.append(a);
-  element.append(p);
+  h1.className = 'text-2xl font-bold';
+
+  const nav = document.createElement('nav');
+  nav.className = 'flex items-center';
+
+  const a = Link('#/login', 'Login', 'bg-sky-600 hover:bg-sky-500 px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2'); // Use hash routing for SPA
+
+  // Add a login icon
+  a.innerHTML = `
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+    </svg>
+    Login
+  `;
+
+  nav.append(a);
+  element.append(h1, nav);
   return element;
 };
 

@@ -1,26 +1,35 @@
 import { LoginView } from '../views/organisms/loginView.js';
 import { Layout } from './layoutController.js';
 import { AuthenticationModel } from '../models/loginModel.js';
+import { auth } from '../services/auth.js';
 
 export const LoginPage = () => {
-  const loginForm = LoginView();
+  const container = LoginView();
+  const form = container.querySelector('form');
 
-  loginForm.addEventListener('submit', (e) => {
-    handleLogin(e);
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const username = formData.get('username');
+    const password = formData.get('password');
+
+    if (username && password) {
+      const data = await AuthenticationModel(username, password);
+      console.log('Login response:', data);
+      if (data && (data.token || data.accessToken)) {
+        const token = data.token || data.accessToken;
+        auth.setToken(token);
+        console.log('Token saved:', auth.getToken());
+        window.location.hash = '#home';
+      } else {
+        alert('Login failed - check credentials');
+        console.log('No token found in response:', data);
+      }
+    } else {
+      alert('Please fill in both username and password');
+    }
   });
 
-  return Layout('', loginForm); // Empty title to avoid duplicate h1
-};
-
-export const handleLogin = async (e) => {
-  e.preventDefault();
-  const form = e.currentTarget;
-
-  const username = form.username.value.trim();
-  const password = form.password.value.trim();
-
-  if (username && password) {
-    const data = await AuthenticationModel(username, password);
-    console.log(data);
-  }
+  return Layout('', container);
 };
