@@ -14,8 +14,8 @@ export const ProductPage = async () => {
   const formattedProducts = data.map((item) => ({
     ...item,
     category, // Add category to each product for linking
-    stockText: item.stock ? 'På lager' : 'Forventes på lager indenfor få uger',
-    stockClass: item.stock ? 'text-green-600' : 'text-red-600',
+    stockText: item.stock > 0 ? `${item.stock} på lager` : 'Forventes på lager indenfor få uger',
+    stockClass: item.stock > 10 ? 'text-green-600' : item.stock > 0 ? 'text-orange-500' : 'text-red-600',
   }));
 
   const html = ProductListView(formattedProducts);

@@ -27,8 +27,8 @@ export const ProductDetailPage = async () => {
     // Format product data for display
     const formattedProduct = {
       ...product,
-      stockText: product.stock ? 'På lager' : 'Forventes på lager indenfor få uger',
-      stockClass: product.stock ? 'text-green-600' : 'text-red-600',
+      stockText: product.stock > 0 ? `${product.stock} stk. på lager` : 'Forventes på lager indenfor få uger',
+      stockClass: product.stock > 10 ? 'text-green-600' : product.stock > 0 ? 'text-orange-500' : 'text-red-600',
       formattedPrice: price2Dkk(product.price),
       categoryTitle: product.category?.title || '',
       brandTitle: product.brand?.title || '',

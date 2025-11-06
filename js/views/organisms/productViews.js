@@ -25,8 +25,8 @@ export const ProductListView = (products) => {
     const priceElement = Div('text-xl font-bold text-gray-800');
     priceElement.innerText = price2Dkk(price);
 
-    const stockElm = Paragraph(stockClass + ' text-sm font-medium');
-    stockElm.innerText = stockText;
+    const stockElm = Div(stockClass + ' text-sm font-bold border px-2 py-1 rounded-md bg-gray-50');
+    stockElm.innerHTML = `📦 ${stockText}`;
 
     cost.append(priceElement, stockElm);
     div.append(cost);
@@ -79,9 +79,16 @@ export const ProductDetailView = (product) => {
   // Price section
   const priceSection = Div('mb-6');
   const price = Heading(formattedPrice, 2, 'text-2xl font-bold text-blue-600');
-  const stock = Paragraph(stockClass + ' text-sm font-medium');
-  stock.innerText = stockText;
-  priceSection.append(price, stock);
+
+  // Enhanced stock display
+  const stockContainer = Div('mt-3 p-3 border rounded-lg bg-gray-50');
+  const stockLabel = Paragraph('text-sm font-medium text-gray-700 mb-1');
+  stockLabel.innerText = 'Lagerstatus:';
+  const stock = Div(stockClass + ' text-lg font-bold flex items-center gap-2');
+  stock.innerHTML = `📦 ${stockText}`;
+  stockContainer.append(stockLabel, stock);
+
+  priceSection.append(price, stockContainer);
   infoSection.append(priceSection);
 
   // Teaser
