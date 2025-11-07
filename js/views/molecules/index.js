@@ -8,7 +8,17 @@ export const HeaderView = () => {
   h1.className = 'text-2xl font-bold';
 
   const nav = document.createElement('nav');
-  nav.className = 'flex items-center';
+  nav.className = 'flex items-center gap-4';
+
+  // Cart link with badge
+  const cartLink = Link('#/cart', '', 'relative bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2');
+  cartLink.innerHTML = `
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"/>
+    </svg>
+    Kurv
+    <span data-cart-badge class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold" style="display: none;">0</span>
+  `;
 
   const a = Link('#/login', 'Login', 'bg-sky-600 hover:bg-sky-500 px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2'); // Use hash routing for SPA
 
@@ -20,7 +30,7 @@ export const HeaderView = () => {
     Login
   `;
 
-  nav.append(a);
+  nav.append(cartLink, a);
   element.append(h1, nav);
   return element;
 };

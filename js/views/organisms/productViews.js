@@ -1,5 +1,6 @@
-import { Div, Fragment, Heading, Image, Paragraph, Link } from '../atoms/index.js';
+import { Div, Fragment, Heading, Image, Paragraph, Link, Button } from '../atoms/index.js';
 import { price2Dkk } from '../../utils/index.js';
+import { addToCart, isInCart, getCartQuantity } from '../../controllers/cartController.js';
 
 export const ProductListView = (products) => {
   const element = Fragment();
@@ -28,7 +29,20 @@ export const ProductListView = (products) => {
     const stockElm = Div(stockClass + ' text-sm font-bold border px-2 py-1 rounded-md bg-gray-50');
     stockElm.innerHTML = `📦 ${stockText}`;
 
-    cost.append(priceElement, stockElm);
+    // Add to Cart button
+    const addToCartBtn = Button('Læg i kurv', 'button', 'mt-2 w-full bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded-md text-sm font-semibold transition-colors');
+    addToCartBtn.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      try {
+        addToCart(product, 1);
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+      }
+    };
+
+    cost.append(priceElement, stockElm, addToCartBtn);
     div.append(cost);
 
     // Append div to link, then link to element
@@ -87,6 +101,68 @@ export const ProductDetailView = (product) => {
   const stock = Div(stockClass + ' text-lg font-bold flex items-center gap-2');
   stock.innerHTML = `📦 ${stockText}`;
   stockContainer.append(stockLabel, stock);
+
+  priceSection.append(price, stockContainer);
+
+  // Add to Cart section
+  const cartSection = Div('mt-6 p-4 border-2 border-sky-200 rounded-lg bg-sky-50');
+
+  // Quantity selector
+  const quantityContainer = Div('flex items-center gap-3 mb-4');
+  const quantityLabel = Paragraph('text-sm font-medium text-gray-700');
+  quantityLabel.innerText = 'Antal:';
+
+  const quantityControls = Div('flex items-center gap-2');
+  const decreaseBtn = Button('-', 'button', 'w-8 h-8 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 rounded-md font-bold');
+  const quantityInput = document.createElement('input');
+  quantityInput.type = 'number';
+  quantityInput.min = '1';
+  quantityInput.max = '99';
+  quantityInput.value = '1';
+  quantityInput.className = 'w-16 text-center border border-gray-300 rounded-md py-1';
+  const increaseBtn = Button('+', 'button', 'w-8 h-8 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 rounded-md font-bold');
+
+  decreaseBtn.onclick = () => {
+    if (quantityInput.value > 1) {
+      quantityInput.value = parseInt(quantityInput.value) - 1;
+    }
+  };
+
+  increaseBtn.onclick = () => {
+    if (quantityInput.value < 99) {
+      quantityInput.value = parseInt(quantityInput.value) + 1;
+    }
+  };
+
+  quantityControls.append(decreaseBtn, quantityInput, increaseBtn);
+  quantityContainer.append(quantityLabel, quantityControls);
+  cartSection.append(quantityContainer);
+
+  // Add to Cart button
+  const addToCartBtn = Button(
+    '🛒 Læg i kurv',
+    'button',
+    'w-full bg-sky-600 hover:bg-sky-700 text-white py-3 px-6 rounded-md text-lg font-semibold transition-colors flex items-center justify-center gap-2'
+  );
+  addToCartBtn.onclick = () => {
+    const quantity = parseInt(quantityInput.value) || 1;
+    try {
+      addToCart(product, quantity);
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
+  };
+  cartSection.append(addToCartBtn);
+
+  // Show current cart quantity if item is already in cart
+  const currentQuantity = getCartQuantity(product.id);
+  if (currentQuantity > 0) {
+    const cartInfo = Paragraph('text-sm text-sky-700 mt-2 text-center');
+    cartInfo.innerHTML = `✓ ${currentQuantity} stk. i kurven`;
+    cartSection.append(cartInfo);
+  }
+
+  infoSection.append(cartSection);
 
   priceSection.append(price, stockContainer);
   infoSection.append(priceSection);
